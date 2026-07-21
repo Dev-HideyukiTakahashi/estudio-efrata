@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 
@@ -9,51 +10,51 @@ import { Star } from 'lucide-react';
 const testimonials = [
   {
     id: 1,
-    name: 'Camila Rodrigues',
-    photo: null,
+    name: 'Vanessa Garcia',
     rating: 5,
     text: 'Simplesmente o melhor salão que já fui! A Valéria é extremamente talentosa, saí de lá me sentindo uma nova mulher. Ambiente luxuoso e atendimento impecável.',
     professional: 'valeria',
+    photo: '/images/depoimentos/vanessa.png',
   },
   {
     id: 2,
-    name: 'Rafael Oliveira',
-    photo: null,
+    name: 'Hideyuki Takahashi',
     rating: 5,
     text: 'O Bruno é um artista! Melhor corte que já tive. A barboterapia é uma experiência que todo homem deveria experimentar. Ambiente incrível.',
     professional: 'bruno',
+    photo: '/images/depoimentos/hideyuki.png',
   },
   {
     id: 3,
-    name: 'Juliana Costa',
-    photo: null,
+    name: 'Vanessa Garcia',
     rating: 5,
     text: 'Fiz uma transformação completa com a Valéria e o resultado superou minhas expectativas. Profissionalismo, carinho e um resultado impecável.',
     professional: 'valeria',
+    photo: '/images/depoimentos/vanessa.png',
   },
   {
     id: 4,
-    name: 'Marcos Santos',
-    photo: null,
+    name: 'Hideyuki Takahashi',
     rating: 5,
     text: 'Finalmente um lugar que entende de estilo masculino. O Bruno sabe exatamente o que funciona. Virei cliente fiel!',
     professional: 'bruno',
+    photo: '/images/depoimentos/hideyuki.png',
   },
   {
     id: 5,
-    name: 'Ana Paula Lima',
-    photo: null,
+    name: 'Vanessa Garcia',
     rating: 5,
     text: 'O Estúdio Efrata é outro nível. A coloração que a Valéria fez ficou simplesmente perfeita. Super recomendo!',
     professional: 'valeria',
+    photo: '/images/depoimentos/vanessa.png',
   },
   {
     id: 6,
-    name: 'Thiago Fernandes',
-    photo: null,
+    name: 'Hideyuki Takahashi',
     rating: 5,
     text: 'Corte executivo impecável. Ambiente premium, atendimento nota 10. O Bruno é o melhor barbeiro da região!',
     professional: 'bruno',
+    photo: '/images/depoimentos/hideyuki.png',
   },
 ];
 
@@ -62,7 +63,7 @@ export function Testimonials() {
     // ==========================================
     // 2. SEÇÃO PRINCIPAL DE DEPOIMENTOS
     // ==========================================
-    <section className="relative py-32 overflow-hidden">
+    <section className="relative py-32 overflow-hidden cursor-default">
       {/* Gradiente de fundo base */}
       <div className="absolute inset-0 bg-linear-to-b from-black via-[#0a0a0f] to-black" />
 
@@ -87,7 +88,7 @@ export function Testimonials() {
         </motion.div>
 
         {/* ========================================== */}
-        {/* 3. GRADE DE CARDS DOS DEPOIMENTOS         */}
+        {/* 3. GRADE DE CARDS DOS DEPOIMENTOS          */}
         {/* ========================================== */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((item, index) => (
@@ -96,11 +97,11 @@ export function Testimonials() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className={`p-6 rounded-2xl backdrop-blur-sm border transition-all duration-500 ${
+              transition={{ delay: (index % 3) * 0.1, duration: 0.4, ease: 'easeOut' }}
+              className={`p-6 rounded-2xl backdrop-blur-sm border cursor-default transition-all duration-300 ease-out ${
                 item.professional === 'valeria'
-                  ? 'bg-purple-900/10 border-purple-500/10 hover:border-purple-500/20'
-                  : 'bg-blue-900/10 border-blue-500/10 hover:border-blue-500/20'
+                  ? 'bg-purple-900/15 border-purple-500/20 hover:border-purple-500/40 hover:shadow-[0_12px_35px_rgba(168,85,247,0.3)]'
+                  : 'bg-blue-900/15 border-blue-500/20 hover:border-blue-500/40 hover:shadow-[0_12px_35px_rgba(59,130,246,0.3)]'
               }`}
             >
               {/* Avaliação em Estrelas */}
@@ -125,19 +126,19 @@ export function Testimonials() {
 
               {/* Informações do Cliente */}
               <div className="flex items-center gap-3">
-                <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium ${
-                    item.professional === 'valeria'
-                      ? 'bg-purple-500/20 text-purple-300'
-                      : 'bg-blue-500/20 text-blue-300'
-                  }`}
-                >
-                  {item.name.charAt(0)}
+                <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/10 shrink-0">
+                  <Image
+                    src={item.photo}
+                    alt={item.name}
+                    fill
+                    sizes="40px"
+                    className="object-cover"
+                  />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white">{item.name}</p>
                   <p className="text-xs text-white/30">
-                    {item.professional === 'valeria' ? 'Cliente Valéria' : 'Cliente Bruno'}
+                    {item.professional === 'valeria' ? 'Valéria' : 'Bruno'}
                   </p>
                 </div>
               </div>

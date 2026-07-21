@@ -47,8 +47,8 @@ export function Location() {
             </div>
 
             <p className="text-white/50 text-sm leading-relaxed mb-8 max-w-md">
-              Estamos localizados em Cipó Guaçu, com fácil acesso e estacionamento. Venha nos
-              visitar e viver uma experiência premium.
+              Estamos localizados em Cipó Guaçu, com fácil localização. Venha nos visitar e viver
+              uma experiência premium.
             </p>
 
             {/* Botão Como Chegar (Com cursor-pointer) */}

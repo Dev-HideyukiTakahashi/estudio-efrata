@@ -86,7 +86,7 @@ export function Header({ onBookClick }: HeaderProps) {
             ))}
             <button
               onClick={onBookClick}
-              className="ml-4 px-6 py-2.5 bg-linear-to-r from-purple-600 to-blue-600 text-white text-sm font-medium rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 tracking-wider"
+              className="ml-4 px-6 py-2.5 bg-linear-to-r from-purple-600 to-blue-600 text-white text-sm font-medium rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 tracking-wider cursor-pointer"
             >
               Agendar Agora
             </button>

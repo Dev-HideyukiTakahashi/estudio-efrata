@@ -68,7 +68,7 @@ export function Hero() {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="group flex"
+            className="group flex cursor-default"
           >
             <div className="relative w-full flex flex-col">
               <div className="absolute -inset-1 bg-linear-to-r from-purple-600/20 to-purple-400/20 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -107,7 +107,7 @@ export function Hero() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="group flex"
+            className="group flex cursor-default"
           >
             <div className="relative w-full flex flex-col">
               <div className="absolute -inset-1 bg-linear-to-r from-blue-600/20 to-blue-400/20 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

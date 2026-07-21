@@ -83,7 +83,11 @@ export function About() {
           >
             {/* Card da Valéria */}
             <div className="space-y-4">
-              <div className="rounded-2xl aspect-3/4 bg-linear-to-br from-purple-900/20 to-purple-950/20 border border-purple-500/10 flex items-center justify-center">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.4, ease: 'easeOut' }}
+                className="rounded-2xl aspect-3/4 bg-linear-to-br from-purple-900/20 to-purple-950/20 border border-purple-500/10 flex items-center justify-center hover:shadow-2xl hover:shadow-purple-500/10 transition-shadow cursor-default"
+              >
                 <div className="text-center p-4">
                   <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-linear-to-br from-purple-400 to-purple-700 flex items-center justify-center">
                     <span className="text-white text-2xl">V</span>
@@ -91,12 +95,16 @@ export function About() {
                   <p className="text-white/70 text-sm font-medium">Valéria</p>
                   <p className="text-purple-300/50 text-xs">Cabeleireira</p>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* Card do Bruno */}
             <div className="space-y-4 pt-8">
-              <div className="rounded-2xl aspect-3/4 bg-linear-to-br from-blue-900/20 to-blue-950/20 border border-blue-500/10 flex items-center justify-center">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.4, ease: 'easeOut' }}
+                className="rounded-2xl aspect-3/4 bg-linear-to-br from-blue-900/20 to-blue-950/20 border border-blue-500/10 flex items-center justify-center hover:shadow-2xl hover:shadow-blue-500/10 transition-shadow cursor-default"
+              >
                 <div className="text-center p-4">
                   <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-linear-to-br from-blue-400 to-blue-700 flex items-center justify-center">
                     <span className="text-white text-2xl">B</span>
@@ -104,7 +112,7 @@ export function About() {
                   <p className="text-white/70 text-sm font-medium">Bruno</p>
                   <p className="text-blue-300/50 text-xs">Barbeiro</p>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>

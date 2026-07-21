@@ -119,7 +119,7 @@ export function Services({ onBookClick }: ServicesProps) {
     <section id="servicos" className="relative py-32 overflow-hidden">
       <div className="absolute inset-0 bg-linear-to-b from-black via-[#0a0a0f] to-black" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 cursor-default">
         {/* Cabeçalho da Seção */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
