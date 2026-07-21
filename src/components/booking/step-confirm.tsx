@@ -2,12 +2,13 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, Calendar, Clock, User, Scissors, MapPin } from 'lucide-react';
-import { formatDate, formatPrice } from '@/lib/utils';
+import { CheckCircle, AlertTriangle, Send, MessageCircle } from 'lucide-react';
+import { formatDate } from '@/lib/utils';
 import { getSupabase } from '@/lib/supabase';
-const supabase = getSupabase();
 import { buildWhatsAppMessage, getWhatsAppLink } from '@/lib/whatsapp';
 import type { Service } from '@/types';
+
+const supabase = getSupabase();
 
 interface StepConfirmProps {
   professional: 'valeria' | 'bruno';
@@ -32,14 +33,38 @@ export function StepConfirm({
   onBack,
   onReset,
 }: StepConfirmProps) {
-  // Variáveis de estado para controle de carregamento, erros e sucesso do agendamento
-  const [loading, setIsLoading] = useState(false);
+  // Variáveis de estado
+  const [isAwaitingWhatsApp, setIsAwaitingWhatsApp] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [isSuccess, setIsSuccess] = useState(false);
 
-  // Função de evento: Confirma e insere o agendamento no Supabase e dispara o link do WhatsApp
-  const handleConfirm = async () => {
-    setIsLoading(true);
+  // Função para gerar a mensagem e o link do WhatsApp
+  const generateWhatsAppURL = () => {
+    const whatsappMessage = buildWhatsAppMessage({
+      customerName,
+      customerPhone,
+      professional: professional === 'valeria' ? 'Valéria' : 'Bruno',
+      service: service.name,
+      date: formatDate(date),
+      time,
+    });
+    return getWhatsAppLink(whatsappMessage);
+  };
+
+  // Função de evento: Abre o WhatsApp e muda a tela para aguardar a confirmação do cliente
+  const handleOpenWhatsApp = () => {
+    window.open(generateWhatsAppURL(), '_blank');
+    setIsAwaitingWhatsApp(true);
+  };
+
+  // Função de evento: O cliente clicou em "Não", reabre o WhatsApp
+  const handleRetryWhatsApp = () => {
+    window.open(generateWhatsAppURL(), '_blank');
+  };
+
+  // Função de evento: Confirma que enviou a mensagem, salva no banco e fecha o modal
+  const handleConfirmBooking = async () => {
+    setIsSubmitting(true);
     setError('');
 
     try {
@@ -56,116 +81,88 @@ export function StepConfirm({
 
       if (insertError) throw insertError;
 
-      setIsSuccess(true);
-
-      // Constrói e abre automaticamente a mensagem formatada no WhatsApp
-      const whatsappMessage = buildWhatsAppMessage({
-        customerName,
-        customerPhone,
-        professional: professional === 'valeria' ? 'Valéria' : 'Bruno',
-        service: service.name,
-        date: formatDate(date),
-        time,
-      });
-
-      window.open(getWhatsAppLink(whatsappMessage), '_blank');
+      // Sucesso: Fecha o modal/reseta o fluxo diretamente
+      onReset();
     } catch (err) {
-      setError('Erro ao confirmar agendamento. Tente novamente.');
+      setError('Erro ao salvar o agendamento no sistema. Tente novamente.');
+      setIsSubmitting(false);
     }
-    setIsLoading(false);
   };
 
-  // Renderização condicional: Tela de sucesso após a confirmação
-  if (isSuccess) {
+  // ---------------------------------------------------------------------------
+  // Renderização: Tela 2 - Aguardando confirmação do WhatsApp
+  // ---------------------------------------------------------------------------
+  if (isAwaitingWhatsApp) {
     return (
-      <div className="text-center py-8 space-y-6">
+      <div className="text-center py-4 space-y-6">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', stiffness: 200 }}
+          className="w-16 h-16 bg-purple-500/20 text-purple-400 rounded-full flex items-center justify-center mx-auto"
         >
-          <CheckCircle size={64} className="mx-auto text-green-400" />
+          <MessageCircle size={32} />
         </motion.div>
-        <h3 className="text-2xl font-light text-white">Agendamento Confirmado!</h3>
-        <p className="text-white/50 text-sm">
-          Seu horário foi reservado com sucesso.
-          <br />
-          Você foi redirecionado para o WhatsApp.
-        </p>
-        <button
-          onClick={onReset}
-          className="w-full py-3 bg-linear-to-r from-purple-600 to-blue-600 text-white rounded-xl text-sm font-medium hover:shadow-lg hover:shadow-purple-500/20 transition-all cursor-pointer"
-        >
-          Concluir / Fechar
-        </button>
+
+        <div className="space-y-2">
+          <h3 className="text-xl font-light text-white">Quase lá!</h3>
+          <p className="text-white/70 text-sm">
+            O salão foi notificado pelo agendamento no WhatsApp?
+          </p>
+        </div>
+
+        {error && <p className="text-red-400/70 text-xs">{error}</p>}
+
+        <div className="flex flex-col gap-3 mt-4">
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={handleConfirmBooking}
+            disabled={isSubmitting}
+            className="w-full py-4 bg-linear-to-r from-green-600 to-emerald-600 text-white rounded-xl text-sm font-medium hover:shadow-lg transition-all disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2"
+          >
+            <CheckCircle size={20} />
+            {isSubmitting ? 'Salvando...' : 'Sim, notifiquei o salão'}
+          </motion.button>
+
+          <button
+            onClick={handleRetryWhatsApp}
+            disabled={isSubmitting}
+            className="w-full py-3 bg-white/5 border border-white/10 text-white/70 rounded-xl text-sm hover:bg-white/10 transition-all cursor-pointer flex items-center justify-center gap-2"
+          >
+            <Send size={16} />
+            Não, reenviar mensagem
+          </button>
+        </div>
       </div>
     );
   }
 
-  // Renderização padrão: Resumo dos dados e botões de ação
+  // ---------------------------------------------------------------------------
+  // Renderização: Tela 1 - Aviso Inicial (Sem os detalhes para não poluir)
+  // ---------------------------------------------------------------------------
   return (
     <div className="space-y-6">
-      <div className="text-center">
-        <h3 className="text-xl font-light text-white mb-2">Confirmar Agendamento</h3>
-        <p className="text-white/40 text-sm">Revise os dados antes de confirmar</p>
+      <div className="text-center space-y-2">
+        <h3 className="text-xl font-light text-white">Finalizar Agendamento</h3>
+        <p className="text-white/40 text-sm">Estamos prontos para reservar seu horário.</p>
       </div>
 
-      <div className="space-y-3">
-        {/* Bloco: Nome do Cliente */}
-        <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5">
-          <User size={16} className="text-purple-300" />
-          <div>
-            <p className="text-xs text-white/40">Cliente</p>
-            <p className="text-sm text-white">{customerName}</p>
-          </div>
-        </div>
-
-        {/* Bloco: Profissional Escolhido */}
-        <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5">
-          <Scissors
-            size={16}
-            className={professional === 'valeria' ? 'text-purple-300' : 'text-blue-300'}
-          />
-          <div>
-            <p className="text-xs text-white/40">Profissional</p>
-            <p className="text-sm text-white">{professional === 'valeria' ? 'Valéria' : 'Bruno'}</p>
-          </div>
-        </div>
-
-        {/* Bloco: Detalhes do Serviço e Preço */}
-        <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5">
-          <MapPin size={16} className="text-blue-300" />
-          <div>
-            <p className="text-xs text-white/40">Serviço</p>
-            <p className="text-sm text-white">{service.name}</p>
-            <p className="text-xs text-white/30">{formatPrice(service.price)}</p>
-          </div>
-        </div>
-
-        {/* Bloco: Data Selecionada */}
-        <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5">
-          <Calendar size={16} className="text-purple-300" />
-          <div>
-            <p className="text-xs text-white/40">Data</p>
-            <p className="text-sm text-white">{formatDate(date)}</p>
-          </div>
-        </div>
-
-        {/* Bloco: Horário Selecionado */}
-        <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5">
-          <Clock size={16} className="text-blue-300" />
-          <div>
-            <p className="text-xs text-white/40">Horário</p>
-            <p className="text-sm text-white">{time}</p>
-          </div>
+      {/* Aviso Importante Redesenhado */}
+      <div className="bg-orange-500/10 border border-orange-500/20 rounded-2xl p-5 flex items-start gap-4">
+        <AlertTriangle className="text-orange-400 shrink-0 mt-0.5" size={24} />
+        <div className="space-y-1">
+          <p className="text-orange-200 text-sm font-medium">Atenção ao WhatsApp</p>
+          <p className="text-orange-200/70 text-xs leading-relaxed">
+            Lembre-se de notificar o salão enviando a mensagem automática e{' '}
+            <strong>voltar para esta tela</strong> para concluir e salvar o seu agendamento no
+            sistema.
+          </p>
         </div>
       </div>
 
-      {/* Exibição de Erro, caso ocorra falha na inserção */}
-      {error && <p className="text-red-400/70 text-xs text-center">{error}</p>}
-
-      {/* Ações: Voltar etapa ou Confirmar agendamento */}
-      <div className="flex gap-3">
+      {/* Ações: Voltar etapa ou Iniciar Envio */}
+      <div className="flex gap-3 pt-2">
         <button
           onClick={onBack}
           className="flex-1 py-3 rounded-xl border border-white/10 text-white/50 hover:text-white hover:border-white/30 transition-all text-sm cursor-pointer"
@@ -175,11 +172,11 @@ export function StepConfirm({
         <motion.button
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.99 }}
-          onClick={handleConfirm}
-          disabled={loading}
-          className="flex-1 py-3 bg-linear-to-r from-purple-600 to-blue-600 text-white rounded-xl text-sm font-medium hover:shadow-lg hover:shadow-purple-500/20 transition-all disabled:opacity-50 cursor-pointer"
+          onClick={handleOpenWhatsApp}
+          className="flex-[2] py-3 bg-linear-to-r from-purple-600 to-blue-600 text-white rounded-xl text-sm font-medium hover:shadow-lg hover:shadow-purple-500/20 transition-all cursor-pointer flex items-center justify-center gap-2"
         >
-          {loading ? 'Confirmando...' : 'Confirmar Agendamento'}
+          <MessageCircle size={18} />
+          Confirmar e Enviar
         </motion.button>
       </div>
     </div>

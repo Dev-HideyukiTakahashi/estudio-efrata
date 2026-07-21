@@ -13,8 +13,8 @@ export function buildWhatsAppMessage(params: {
     '',
     '*Novo Agendamento*',
     '──────────────',
-    '👤 *CLIENTE*',
     '',
+    '👤 *CLIENTE*',
     `• Nome: ${params.customerName}`,
     `• Telefone: ${params.customerPhone}`,
     '',
@@ -25,6 +25,7 @@ export function buildWhatsAppMessage(params: {
     '📅 *DATA E HORÁRIO*',
     `• Dia: ${params.date}`,
     `• Horário: ${params.time}`,
+    '',
   ].join('\n');
 
   return message;
