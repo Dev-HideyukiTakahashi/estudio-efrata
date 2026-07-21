@@ -1,6 +1,5 @@
--- Studio Efrata o Salão - Supabase Schema
-
--- Tabela de agendamentos
+-- Estudio Efrata o Salão - Supabase Schema
+-- 1. Tabela de agendamentos
 CREATE TABLE appointments (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   customer_name TEXT NOT NULL,
@@ -14,12 +13,12 @@ CREATE TABLE appointments (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Índices para busca eficiente
+-- Índices para busca eficiente de horários ocupados
 CREATE INDEX idx_appointments_date ON appointments(date);
 CREATE INDEX idx_appointments_professional ON appointments(professional);
 CREATE INDEX idx_appointments_status ON appointments(status);
 
--- Tabela de serviços (opcional - para gerenciar via admin futuramente)
+-- 2. Tabela de serviços
 CREATE TABLE services (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   professional TEXT NOT NULL CHECK (professional IN ('valeria', 'bruno')),
@@ -31,7 +30,7 @@ CREATE TABLE services (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Inserir serviços padrão
+-- Inserir serviços padrão da Valéria e do Bruno
 INSERT INTO services (professional, name, description, duration, price) VALUES
   ('valeria', 'Corte Premium Feminino', 'Corte personalizado com análise de formato de rosto e textura dos fios.', 60, 180.00),
   ('valeria', 'Coloração Personalizada', 'Técnicas exclusivas de coloração com produtos profissionais de alta performance.', 120, 350.00),
@@ -44,22 +43,11 @@ INSERT INTO services (professional, name, description, duration, price) VALUES
   ('bruno', 'Corte + Barba Executivo', 'Combo completo de corte e barba para o homem que precisa de praticidade e estilo.', 90, 180.00),
   ('bruno', 'Design de Estilo Masculino', 'Consultoria de estilo capilar masculino com corte personalizado e finalização premium.', 90, 200.00);
 
--- Tabela de administradores
-CREATE TABLE admin_users (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  email TEXT UNIQUE NOT NULL,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Trigger para criar admin_user quando um usuário se cadastrar via Supabase Auth
--- (execute manualmente após criar o usuário no Auth)
--- INSERT INTO admin_users (email) VALUES ('admin@estudioesfrata.com.br');
-
--- Row Level Security
+-- 3. Row Level Security (Segurança Básica)
 ALTER TABLE appointments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE services ENABLE ROW LEVEL SECURITY;
 
--- Políticas para appointments
+-- Políticas para permitir inserção e leitura pública de agendamentos e serviços
 CREATE POLICY "Anyone can create appointments"
   ON appointments FOR INSERT
   TO anon
@@ -70,7 +58,6 @@ CREATE POLICY "Anyone can view appointments"
   TO anon
   USING (true);
 
--- Políticas para serviços
 CREATE POLICY "Anyone can view services"
   ON services FOR SELECT
   TO anon

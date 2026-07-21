@@ -5,10 +5,9 @@ import { Scissors, Sparkles } from 'lucide-react';
 
 export function Hero() {
   return (
-    // Seção Hero com espaçamento inferior ajustado para mobile (pb-20 sm:pb-0)
     <section
       id="inicio"
-      className="relative min-h-screen flex items-center overflow-hidden pt-32 sm:pt-28 md:pt-0 pb-20 sm:pb-0"
+      className="relative min-h-screen flex items-center overflow-hidden pt-24 sm:pt-28 pb-16"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0f] via-[#0f0a1a] to-[#0a0a1a]" />
 
@@ -20,16 +19,17 @@ export function Hero() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-12"
         >
+          {/* Badge Unificado para todas as telas */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-8"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-4"
           >
             <Sparkles size={14} className="text-purple-300" />
             <span className="text-xs tracking-[0.3em] text-white/60 uppercase">
@@ -37,23 +37,15 @@ export function Hero() {
             </span>
           </motion.div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-light text-white mb-6 tracking-tight mt-4 sm:mt-0">
-Estúdio{' '}
-          <span className="bg-gradient-to-r from-purple-300 via-white to-blue-300 bg-clip-text text-transparent font-bold">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-light text-white mb-4 tracking-tight">
+            Estúdio{' '}
+            <span className="bg-gradient-to-r from-purple-300 via-white to-blue-300 bg-clip-text text-transparent font-bold">
               Efrata
             </span>
           </h1>
 
-          <div className="block sm:hidden mb-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm">
-              <Sparkles size={12} className="text-purple-300" />
-              <span className="text-[10px] tracking-[0.25em] text-white/60 uppercase">
-                Experiência Premium
-              </span>
-            </div>
-          </div>
-
-          <p className="hidden sm:block text-lg sm:text-xl text-white/50 max-w-2xl mx-auto font-light tracking-wide">
+          {/* Texto descritivo enxuto e centralizado para evitar quebras em notebooks de 15" */}
+          <p className="text-base sm:text-lg text-white/50 max-w-xl mx-auto font-light tracking-wide">
             Beleza, estilo e cuidado em uma experiência premium.
           </p>
         </motion.div>
@@ -131,19 +123,6 @@ Estúdio{' '}
             </div>
           </motion.div>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="hidden sm:flex justify-center mt-16"
-        >
-          <div className="flex items-center gap-4 text-white/30 text-xs tracking-[0.2em] uppercase">
-            <div className="w-12 h-px bg-gradient-to-r from-purple-500/50 to-transparent" />
-            <span>Rolagem</span>
-            <div className="w-12 h-px bg-gradient-to-l from-blue-500/50 to-transparent" />
-          </div>
-        </motion.div>
       </div>
     </section>
   );
