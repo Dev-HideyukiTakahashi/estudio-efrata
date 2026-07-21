@@ -1,10 +1,10 @@
-"use client"
+'use client';
 
-import { motion } from "framer-motion"
-import { Sparkles, Scissors } from "lucide-react"
+import { motion } from 'framer-motion';
+import { Sparkles, Scissors } from 'lucide-react';
 
 interface StepProfessionalProps {
-  onSelect: (professional: "valeria" | "bruno") => void
+  onSelect: (professional: 'valeria' | 'bruno') => void;
 }
 
 export function StepProfessional({ onSelect }: StepProfessionalProps) {
@@ -16,14 +16,15 @@ export function StepProfessional({ onSelect }: StepProfessionalProps) {
       </div>
 
       <div className="grid gap-4">
+        {/* Botão de seleção: Valéria */}
         <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={() => onSelect("valeria")}
-          className="group relative p-6 rounded-2xl bg-gradient-to-br from-purple-900/20 to-purple-950/20 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 text-left"
+          whileHover={{ scale: 1.01 }} // Reduzido ligeiramente de 1.02 para evitar distorção brusca
+          whileTap={{ scale: 0.99 }}
+          onClick={() => onSelect('valeria')}
+          className="group relative p-6 rounded-2xl bg-linear-to-br from-purple-900/20 to-purple-950/20 border border-purple-500/20 hover:border-purple-500/40 transition-colors duration-300 text-left cursor-pointer transform-[translateZ(0)] backface-hidden"
         >
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-400 to-purple-700 flex items-center justify-center">
+            <div className="w-14 h-14 rounded-full bg-linear-to-br from-purple-400 to-purple-700 flex items-center justify-center shrink-0">
               <Sparkles size={24} className="text-white" />
             </div>
             <div>
@@ -34,14 +35,15 @@ export function StepProfessional({ onSelect }: StepProfessionalProps) {
           </div>
         </motion.button>
 
+        {/* Botão de seleção: Bruno */}
         <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={() => onSelect("bruno")}
-          className="group relative p-6 rounded-2xl bg-gradient-to-br from-blue-900/20 to-blue-950/20 border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300 text-left"
+          whileHover={{ scale: 1.01 }}
+          whileTap={{ scale: 0.99 }}
+          onClick={() => onSelect('bruno')}
+          className="group relative p-6 rounded-2xl bg-linear-to-br from-blue-900/20 to-blue-950/20 border border-blue-500/20 hover:border-blue-500/40 transition-colors duration-300 text-left cursor-pointer transform-[translateZ(0)] backface-hidden"
         >
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-400 to-blue-700 flex items-center justify-center">
+            <div className="w-14 h-14 rounded-full bg-linear-to-br from-blue-400 to-blue-700 flex items-center justify-center shrink-0">
               <Scissors size={24} className="text-white" />
             </div>
             <div>
@@ -53,5 +55,5 @@ export function StepProfessional({ onSelect }: StepProfessionalProps) {
         </motion.button>
       </div>
     </div>
-  )
+  );
 }

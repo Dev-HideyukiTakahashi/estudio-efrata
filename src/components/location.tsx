@@ -3,16 +3,26 @@
 import { motion } from 'framer-motion';
 import { MapPin, Navigation } from 'lucide-react';
 
+// ==========================================
+// 1. DADOS DE LOCALIZAÇÃO E LINKS ÚTEIS
+// ==========================================
 const address = 'Cipó Guaçu, SP';
 const mapsUrl = 'https://maps.google.com/maps?q=Cipó+Guaçu+SP';
 
 export function Location() {
   return (
+    // ==========================================
+    // 2. SEÇÃO PRINCIPAL DE LOCALIZAÇÃO
+    // ==========================================
     <section className="relative py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-[#0a0a0f] to-black" />
+      {/* Gradiente de fundo base */}
+      <div className="absolute inset-0 bg-linear-to-b from-black via-[#0a0a0f] to-black" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* ========================================== */}
+          {/*// 3. INFORMAÇÕES DE ENDEREÇO E BOTÃO       //*}
+          // ========================================== */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -23,11 +33,12 @@ export function Location() {
             </span>
             <h2 className="text-3xl sm:text-4xl font-light text-white mb-6">
               Estúdio{' '}
-              <span className="bg-gradient-to-r from-purple-300 to-blue-300 bg-clip-text text-transparent font-bold">
+              <span className="bg-linear-to-r from-purple-300 to-blue-300 bg-clip-text text-transparent font-bold">
                 Efrata
               </span>
             </h2>
 
+            {/* Endereço com ícone */}
             <div className="flex items-start gap-3 mb-6">
               <MapPin size={20} className="text-purple-300 mt-1 shrink-0" />
               <div>
@@ -40,22 +51,26 @@ export function Location() {
               visitar e viver uma experiência premium.
             </p>
 
+            {/* Botão Como Chegar (Com cursor-pointer) */}
             <a
               href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/10 rounded-full text-sm text-white/70 hover:text-white hover:border-white/30 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/10 rounded-full text-sm text-white/70 hover:text-white hover:border-white/30 transition-all duration-300 cursor-pointer"
             >
               <Navigation size={16} />
               Como Chegar
             </a>
           </motion.div>
 
+          {/* ========================================== */}
+          {/* 4. EMBED DO MAPA (GOOGLE MAPS COM FILTRO) *}
+          // ========================================== */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="rounded-2xl overflow-hidden border border-white/10 aspect-[4/3] bg-white/[0.02]"
+            className="rounded-2xl overflow-hidden border border-white/10 aspect-4/3 bg-white/2"
           >
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117727.05252944807!2d-46.88603545!3d-23.5224655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cefb170559dd15%3A0x8cecec6f7b81c16f!2sCip%C3%B3%20Gua%C3%A7u%2C%20SP%2C%2006930-000!5e0!3m2!1spt-BR!2sbr!4v1"

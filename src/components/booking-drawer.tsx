@@ -1,56 +1,48 @@
-"use client"
+'use client';
 
-import { useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { X, ChevronLeft } from "lucide-react"
-import { useBooking } from "@/hooks/use-booking"
-import { StepProfessional } from "./booking/step-professional"
-import { StepService } from "./booking/step-service"
-import { StepDate } from "./booking/step-date"
-import { StepTime } from "./booking/step-time"
-import { StepClientInfo } from "./booking/step-client-info"
-import { StepConfirm } from "./booking/step-confirm"
-import type { Service } from "@/types"
+import { useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, ChevronLeft } from 'lucide-react';
+import { useBooking } from '@/hooks/use-booking';
+import { StepProfessional } from './booking/step-professional';
+import { StepService } from './booking/step-service';
+import { StepDate } from './booking/step-date';
+import { StepTime } from './booking/step-time';
+import { StepClientInfo } from './booking/step-client-info';
+import { StepConfirm } from './booking/step-confirm';
+import type { Service } from '@/types';
 
 interface BookingDrawerProps {
-  open: boolean
-  onClose: () => void
-  preselectedService?: Service | null
+  open: boolean;
+  onClose: () => void;
+  preselectedService?: Service | null;
 }
 
 export function BookingDrawer({ open, onClose, preselectedService }: BookingDrawerProps) {
-  const {
-    state,
-    setProfessional,
-    setService,
-    setDate,
-    setTime,
-    setCustomerInfo,
-    goBack,
-    reset,
-  } = useBooking()
+  const { state, setProfessional, setService, setDate, setTime, setCustomerInfo, goBack, reset } =
+    useBooking();
 
   useEffect(() => {
     if (open) {
-      reset()
+      reset();
     }
-  }, [open, reset])
+  }, [open, reset]);
 
   useEffect(() => {
     if (preselectedService && open) {
-      setProfessional(preselectedService.professional)
+      setProfessional(preselectedService.professional);
       setTimeout(() => {
-        setService(preselectedService)
-      }, 100)
+        setService(preselectedService);
+      }, 100);
     }
-  }, [preselectedService, open, setProfessional, setService])
+  }, [preselectedService, open, setProfessional, setService]);
 
   const handleClose = () => {
-    reset()
-    onClose()
-  }
+    reset();
+    onClose();
+  };
 
-  const stepLabels = ["Profissional", "Serviço", "Data", "Horário", "Dados", "Confirmar"]
+  const stepLabels = ['Profissional', 'Serviço', 'Data', 'Horário', 'Dados', 'Confirmar'];
 
   return (
     <AnimatePresence>
@@ -65,11 +57,11 @@ export function BookingDrawer({ open, onClose, preselectedService }: BookingDraw
           />
 
           <motion.div
-            initial={{ x: "100%" }}
+            initial={{ x: '100%' }}
             animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 bottom-0 w-full sm:w-[480px] bg-gradient-to-b from-[#0a0a0f] to-black border-l border-white/5 z-50 overflow-y-auto"
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="fixed right-0 top-0 bottom-0 w-full sm:w-120 bg-linear-to-b from-[#0a0a0f] to-black border-l border-white/5 z-50 overflow-y-auto"
           >
             <div className="sticky top-0 bg-black/80 backdrop-blur-xl border-b border-white/5 z-10">
               <div className="flex items-center justify-between p-4">
@@ -99,8 +91,8 @@ export function BookingDrawer({ open, onClose, preselectedService }: BookingDraw
                       key={label}
                       className={`flex-1 h-1 rounded-full transition-all duration-300 ${
                         i + 1 <= state.step
-                          ? "bg-gradient-to-r from-purple-600 to-blue-600"
-                          : "bg-white/10"
+                          ? 'bg-linear-to-r from-purple-600 to-blue-600'
+                          : 'bg-white/10'
                       }`}
                     />
                   ))}
@@ -120,9 +112,7 @@ export function BookingDrawer({ open, onClose, preselectedService }: BookingDraw
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.2 }}
                 >
-                  {state.step === 1 && (
-                    <StepProfessional onSelect={setProfessional} />
-                  )}
+                  {state.step === 1 && <StepProfessional onSelect={setProfessional} />}
                   {state.step === 2 && state.professional && (
                     <StepService
                       professional={state.professional}
@@ -130,9 +120,7 @@ export function BookingDrawer({ open, onClose, preselectedService }: BookingDraw
                       onBack={goBack}
                     />
                   )}
-                  {state.step === 3 && (
-                    <StepDate onSelect={setDate} onBack={goBack} />
-                  )}
+                  {state.step === 3 && <StepDate onSelect={setDate} onBack={goBack} />}
                   {state.step === 4 && state.date && state.professional && (
                     <StepTime
                       date={state.date}
@@ -143,9 +131,7 @@ export function BookingDrawer({ open, onClose, preselectedService }: BookingDraw
                   )}
                   {state.step === 5 && (
                     <StepClientInfo
-                      onSubmit={(name, phone, notes) =>
-                        setCustomerInfo(name, phone, notes)
-                      }
+                      onSubmit={(name, phone, notes) => setCustomerInfo(name, phone, notes)}
                       onBack={goBack}
                     />
                   )}
@@ -164,8 +150,8 @@ export function BookingDrawer({ open, onClose, preselectedService }: BookingDraw
                         notes={state.notes}
                         onBack={goBack}
                         onReset={() => {
-                          reset()
-                          handleClose()
+                          reset();
+                          handleClose();
                         }}
                       />
                     )}
@@ -176,5 +162,5 @@ export function BookingDrawer({ open, onClose, preselectedService }: BookingDraw
         </>
       )}
     </AnimatePresence>
-  )
+  );
 }

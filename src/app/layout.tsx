@@ -1,65 +1,42 @@
-import type { Metadata } from "next"
-import { Geist, Geist_Mono, Playfair_Display } from "next/font/google"
-import "./globals.css"
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-})
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-})
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-})
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Estúdio Efrata | Beleza e Barbearia Premium em Cipó Guaçu",
+  title: {
+    default: 'Estúdio Efrata | Beleza e Cuidado Premium',
+    template: '%s | Estúdio Efrata',
+  },
   description:
-    "Estúdio Efrata - Beleza, estilo e cuidado em uma experiência premium. Valéria Cabeleireira e Bruno Barbeiro em Cipó Guaçu. Agende seu horário.",
+    'Beleza, estilo e cuidado em uma experiência premium no Cipó Guaçu, SP. Agende seu horário com os melhores profissionais.',
   keywords: [
-    "salão de beleza Cipó Guaçu",
-    "cabeleireira Cipó Guaçu",
-    "barbearia Cipó Guaçu",
-    "salão premium",
-    "corte feminino",
-    "corte masculino",
-    "barba",
-    "coloração",
-    "estúdio efrata",
+    'estúdio de beleza',
+    'salão de cabeleireiro',
+    'estética',
+    'Cipó Guaçu',
+    'agendamento online',
   ],
-  authors: [{ name: "Estúdio Efrata" }],
+  authors: [{ name: 'Kashi Systems' }],
+  creator: 'Kashi Systems',
   openGraph: {
-    title: "Estúdio Efrata | Beleza e Barbearia Premium",
-    description:
-      "Beleza, estilo e cuidado em uma experiência premium. Valéria Cabeleireira e Bruno Barbeiro.",
-    type: "website",
-    locale: "pt_BR",
-    siteName: "Estúdio Efrata",
+    type: 'website',
+    locale: 'pt_BR',
+    url: 'https://estudio-efrata.netlify.app/',
+    title: 'Estúdio Efrata | Experiência Premium',
+    description: 'Beleza, estilo e cuidado em uma experiência premium.',
+    siteName: 'Estúdio Efrata',
   },
   robots: {
     index: true,
     follow: true,
   },
-}
+};
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="pt-BR"
-      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased`}
-    >
-      <body className="min-h-screen bg-[#0a0a0a] text-white font-sans">
+    <html lang="pt-BR">
+      <body className="min-h-screen bg-background text-white font-sans" suppressHydrationWarning>
         {children}
       </body>
     </html>
-  )
+  );
 }

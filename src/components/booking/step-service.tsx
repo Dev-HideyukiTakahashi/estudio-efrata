@@ -1,61 +1,138 @@
-"use client"
+'use client';
 
-import { motion } from "framer-motion"
-import { Clock, Sparkles, Scissors } from "lucide-react"
-import { formatPrice } from "@/lib/utils"
-import type { Service } from "@/types"
+import { motion } from 'framer-motion';
+import { Clock, Sparkles, Scissors } from 'lucide-react';
+import { formatPrice } from '@/lib/utils';
+import type { Service } from '@/types';
 
+// Lista de serviços oferecidos pela profissional Valéria
 const valeriaServices: Service[] = [
-  { id: "v1", professional: "valeria", name: "Corte Premium Feminino", description: "Corte personalizado", duration: 60, price: 180 },
-  { id: "v2", professional: "valeria", name: "Coloração Personalizada", description: "Coloração com produtos premium", duration: 120, price: 350 },
-  { id: "v3", professional: "valeria", name: "Tratamento Capilar Luxury", description: "Hidratação profunda", duration: 90, price: 250 },
-  { id: "v4", professional: "valeria", name: "Escova Especial", description: "Escova modelada", duration: 60, price: 150 },
-  { id: "v5", professional: "valeria", name: "Transformação Completa", description: "Corte + coloração + tratamento", duration: 180, price: 580 },
-]
+  {
+    id: 'v1',
+    professional: 'valeria',
+    name: 'Corte Premium Feminino',
+    description: 'Corte personalizado',
+    duration: 60,
+    price: 180,
+  },
+  {
+    id: 'v2',
+    professional: 'valeria',
+    name: 'Coloração Personalizada',
+    description: 'Coloração com produtos premium',
+    duration: 120,
+    price: 350,
+  },
+  {
+    id: 'v3',
+    professional: 'valeria',
+    name: 'Tratamento Capilar Luxury',
+    description: 'Hidratação profunda',
+    duration: 90,
+    price: 250,
+  },
+  {
+    id: 'v4',
+    professional: 'valeria',
+    name: 'Escova Especial',
+    description: 'Escova modelada',
+    duration: 60,
+    price: 150,
+  },
+  {
+    id: 'v5',
+    professional: 'valeria',
+    name: 'Transformação Completa',
+    description: 'Corte + coloração + tratamento',
+    duration: 180,
+    price: 580,
+  },
+];
 
+// Lista de serviços oferecidos pelo profissional Bruno
 const brunoServices: Service[] = [
-  { id: "b1", professional: "bruno", name: "Corte Masculino Premium", description: "Corte personalizado", duration: 60, price: 120 },
-  { id: "b2", professional: "bruno", name: "Barba Tradicional", description: "Aparação e modelagem", duration: 45, price: 80 },
-  { id: "b3", professional: "bruno", name: "Barboterapia Relaxante", description: "Barba + massagem facial", duration: 75, price: 150 },
-  { id: "b4", professional: "bruno", name: "Corte + Barba Executivo", description: "Combo completo", duration: 90, price: 180 },
-  { id: "b5", professional: "bruno", name: "Design de Estilo Masculino", description: "Consultoria + corte", duration: 90, price: 200 },
-]
+  {
+    id: 'b1',
+    professional: 'bruno',
+    name: 'Corte Masculino Premium',
+    description: 'Corte personalizado',
+    duration: 60,
+    price: 120,
+  },
+  {
+    id: 'b2',
+    professional: 'bruno',
+    name: 'Barba Tradicional',
+    description: 'Aparação e modelagem',
+    duration: 45,
+    price: 80,
+  },
+  {
+    id: 'b3',
+    professional: 'bruno',
+    name: 'Barboterapia Relaxante',
+    description: 'Barba + massagem facial',
+    duration: 75,
+    price: 150,
+  },
+  {
+    id: 'b4',
+    professional: 'bruno',
+    name: 'Corte + Barba Executivo',
+    description: 'Combo completo',
+    duration: 90,
+    price: 180,
+  },
+  {
+    id: 'b5',
+    professional: 'bruno',
+    name: 'Design de Estilo Masculino',
+    description: 'Consultoria + corte',
+    duration: 90,
+    price: 200,
+  },
+];
 
 interface StepServiceProps {
-  professional: "valeria" | "bruno"
-  onSelect: (service: Service) => void
-  onBack: () => void
+  professional: 'valeria' | 'bruno';
+  onSelect: (service: Service) => void;
+  onBack: () => void;
 }
 
 export function StepService({ professional, onSelect, onBack }: StepServiceProps) {
-  const services = professional === "valeria" ? valeriaServices : brunoServices
-  const isValeria = professional === "valeria"
+  // Define quais serviços renderizar com base no profissional selecionado
+  const services = professional === 'valeria' ? valeriaServices : brunoServices;
+  const isValeria = professional === 'valeria';
 
   return (
     <div className="space-y-6">
       <div className="text-center">
         <h3 className="text-xl font-light text-white mb-2">Escolha o Serviço</h3>
         <p className="text-white/40 text-sm">
-          Serviços disponíveis para {isValeria ? "Valéria" : "Bruno"}
+          Serviços disponíveis para {isValeria ? 'Valéria' : 'Bruno'}
         </p>
       </div>
 
-      <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
-        {services.map((service) => (
+      {/* Lista de serviços com rolagem interna e espaçamento */}
+      <div className="space-y-3 max-h-100 overflow-y-auto pr-2">
+        {services.map(service => (
           <motion.button
             key={service.id}
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
             onClick={() => onSelect(service)}
-            className={`w-full p-4 rounded-xl border text-left transition-all duration-300 ${
+            className={`w-full p-4 rounded-xl border text-left transition-all duration-300 cursor-pointer transform-[translateZ(0)][backface-visibility:hidden] ${
               isValeria
-                ? "bg-purple-900/10 border-purple-500/10 hover:border-purple-500/30"
-                : "bg-blue-900/10 border-blue-500/10 hover:border-blue-500/30"
+                ? 'bg-white/5 border-white/10 hover:bg-purple-500/10 hover:border-purple-500/30'
+                : 'bg-white/5 border-white/10 hover:bg-blue-500/10 hover:border-blue-500/30'
             }`}
           >
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-3">
-                <div className={`p-2 rounded-lg ${isValeria ? "bg-purple-500/10" : "bg-blue-500/10"}`}>
+                {/* Ícone dinâmico do serviço */}
+                <div
+                  className={`p-2 rounded-lg shrink-0 ${isValeria ? 'bg-purple-500/10' : 'bg-blue-500/10'}`}
+                >
                   {isValeria ? (
                     <Sparkles size={16} className="text-purple-300" />
                   ) : (
@@ -71,7 +148,10 @@ export function StepService({ professional, onSelect, onBack }: StepServiceProps
                   </div>
                 </div>
               </div>
-              <span className={`text-base font-bold ${isValeria ? "text-purple-300" : "text-blue-300"}`}>
+              {/* Preço formatado do serviço */}
+              <span
+                className={`text-base font-bold shrink-0 ${isValeria ? 'text-purple-300' : 'text-blue-300'}`}
+              >
                 {formatPrice(service.price)}
               </span>
             </div>
@@ -79,5 +159,5 @@ export function StepService({ professional, onSelect, onBack }: StepServiceProps
         ))}
       </div>
     </div>
-  )
+  );
 }

@@ -61,30 +61,33 @@ export function Hero() {
         {/* ========================================== */}
         {/* 3. CARDS DOS PROFISSIONAIS (VALÉRIA & BRUNO) */}
         {/* ========================================== */}
-        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start max-w-5xl mx-auto">
+        {/* Correção aplicada: 'items-stretch' para forçar ambos os cards a terem a mesma altura */}
+        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-stretch max-w-5xl mx-auto">
           {/* Card da Valéria */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="group"
+            className="group flex"
           >
-            <div className="relative">
+            <div className="relative w-full flex flex-col">
               <div className="absolute -inset-1 bg-linear-to-r from-purple-600/20 to-purple-400/20 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative bg-linear-to-br from-purple-900/30 to-purple-950/30 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/10">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-linear-to-br from-purple-400 to-purple-700 flex items-center justify-center">
-                    <Sparkles size={20} className="text-white" />
+              <div className="relative flex flex-col justify-between h-full bg-linear-to-br from-purple-900/30 to-purple-950/30 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/10">
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-full bg-linear-to-brfrom-purple-400 to-purple-700 flex items-center justify-center shrink-0">
+                      <Sparkles size={20} className="text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white">Valéria</h3>
+                      <p className="text-sm text-purple-300/70">Cabeleireira</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-white">Valéria</h3>
-                    <p className="text-sm text-purple-300/70">Cabeleireira</p>
-                  </div>
+                  <p className="text-white/60 text-sm leading-relaxed">
+                    Especialista em transformação, cortes, coloração e cuidados personalizados.
+                    Apaixonada por realçar a beleza única de cada cliente.
+                  </p>
                 </div>
-                <p className="text-white/60 text-sm leading-relaxed">
-                  Especialista em transformação, cortes, coloração e cuidados personalizados.
-                  Apaixonada por realçar a beleza única de cada cliente.
-                </p>
                 <div className="mt-6 flex gap-2">
                   {['Corte', 'Coloração', 'Tratamento'].map(tag => (
                     <span
@@ -104,24 +107,26 @@ export function Hero() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="group"
+            className="group flex"
           >
-            <div className="relative">
+            <div className="relative w-full flex flex-col">
               <div className="absolute -inset-1 bg-linear-to-r from-blue-600/20 to-blue-400/20 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative bg-linear-to-br from-blue-900/30 to-blue-950/30 backdrop-blur-sm rounded-2xl p-8 border border-blue-500/10">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-linear-to-br from-blue-400 to-blue-700 flex items-center justify-center">
-                    <Scissors size={20} className="text-white" />
+              <div className="relative flex flex-col justify-between h-full bg-linear-to-br from-blue-900/30 to-blue-950/30 backdrop-blur-sm rounded-2xl p-8 border border-blue-500/10">
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-full bg-linear-to-br from-blue-400 to-blue-700 flex items-center justify-center shrink-0">
+                      <Scissors size={20} className="text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white">Bruno</h3>
+                      <p className="text-sm text-blue-300/70">Barbeiro</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-white">Bruno</h3>
-                    <p className="text-sm text-blue-300/70">Barbeiro</p>
-                  </div>
+                  <p className="text-white/60 text-sm leading-relaxed">
+                    Barbeiro especialista em cortes masculinos, barba e estilo personalizado. Cada
+                    detalhe pensado para o homem moderno.
+                  </p>
                 </div>
-                <p className="text-white/60 text-sm leading-relaxed">
-                  Barbeiro especialista em cortes masculinos, barba e estilo personalizado. Cada
-                  detalhe pensado para o homem moderno.
-                </p>
                 <div className="mt-6 flex gap-2">
                   {['Corte', 'Barba', 'Estilo'].map(tag => (
                     <span
