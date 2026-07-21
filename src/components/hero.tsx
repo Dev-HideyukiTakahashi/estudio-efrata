@@ -54,7 +54,7 @@ export function Hero() {
 
           {/* Subtítulo Descritivo */}
           <p className="text-base sm:text-lg text-white/50 max-w-xl mx-auto font-light tracking-wide">
-            Beleza, estilo e cuidado em uma experiência premium.
+            Beleza, estilo e cuidado em uma experiência premium
           </p>
         </motion.div>
 

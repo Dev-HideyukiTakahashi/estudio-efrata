@@ -40,24 +40,35 @@ export function generateTimeSlots(
   interval = 30,
 ): { time: string; available: boolean }[] {
   const slots: { time: string; available: boolean }[] = [];
-
-  // Converte horários de abertura e fechamento para minutos totais do dia
   const [openH, openM] = opening.split(':').map(Number);
   const [closeH, closeM] = closing.split(':').map(Number);
   const openMinutes = openH * 60 + openM;
   const closeMinutes = closeH * 60 + closeM;
 
-  // Filtra os horários que já possuem agendamento na data específica
-  const bookedTimes = existingAppointments.filter(a => a.date === date).map(a => a.time);
+  // Mapeia os horários ocupados e adiciona o bloqueio de 60 minutos (próximo slot de 30 min)
+  const bookedTimesSet = new Set<string>();
+  existingAppointments
+    .filter(a => a.date === date)
+    .forEach(a => {
+      bookedTimesSet.add(a.time); // Trava o horário exato agendado
 
-  // Loop para criar os intervalos de horário com base no passo estipulado (ex: de 30 em 30 min)
+      // Converte o horário agendado para minutos e bloqueia +30 min (totalizando 60 min de duração)
+      const [h, m] = a.time.split(':').map(Number);
+      const bookedTotalMin = h * 60 + m + interval;
+      const nextH = Math.floor(bookedTotalMin / 60);
+      const nextMin = bookedTotalMin % 60;
+      const nextTime = `${String(nextH).padStart(2, '0')}:${String(nextMin).padStart(2, '0')}`;
+
+      bookedTimesSet.add(nextTime); // Trava o slot seguinte
+    });
+
   for (let m = openMinutes; m < closeMinutes; m += interval) {
     const h = Math.floor(m / 60);
     const min = m % 60;
     const time = `${String(h).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
     slots.push({
       time,
-      available: !bookedTimes.includes(time),
+      available: !bookedTimesSet.has(time),
     });
   }
 

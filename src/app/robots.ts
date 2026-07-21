@@ -1,12 +1,13 @@
-import type { MetadataRoute } from "next"
+import type { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = 'https://estudio-efrata.netlify.app';
+
   return {
     rules: {
-      userAgent: "*",
-      allow: "/",
-      disallow: "/admin/",
+      userAgent: '*',
+      allow: '/',
     },
-    sitemap: "https://estudioefrata.com.br/sitemap.xml",
-  }
+    sitemap: `${baseUrl}/sitemap.xml`,
+  };
 }
