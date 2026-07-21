@@ -1,39 +1,70 @@
-"use client"
+'use client';
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-const navItems = [
-  { label: "Início", href: "#inicio" },
-  { label: "Sobre", href: "#sobre" },
-  { label: "Serviços", href: "#servicos" },
-  { label: "Galeria", href: "#galeria" },
-  { label: "Agendamento", href: "#agendamento" },
-]
-
-interface HeaderProps {
-  onBookClick: () => void
+// Types e Interfaces
+interface NavItem {
+  label: string;
+  href: string;
 }
 
+interface HeaderProps {
+  onBookClick: () => void;
+}
+
+// Dados de Navegação
+const navigationItems: NavItem[] = [
+  { label: 'Início', href: '#inicio' },
+  { label: 'Sobre', href: '#sobre' },
+  { label: 'Serviços', href: '#servicos' },
+  { label: 'Galeria', href: '#galeria' },
+  { label: 'Agendamento', href: '#agendamento' },
+];
+
 export function Header({ onBookClick }: HeaderProps) {
-  const [scrolled, setScrolled] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
+  // Variáveis de estado com prefixo 'is' e descritivas
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Função de evento com prefixo 'handle' corrigindo o fechamento e clique do menu mobile
+  const handleMobileNavClick = (href: string) => {
+    setIsMobileMenuOpen(false);
+
+    // Pequeno atraso para garantir que a animação feche limpa antes de rolar até a âncora
+    setTimeout(() => {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 150);
+  };
+
+  const handleBookNowClick = () => {
+    setIsMobileMenuOpen(false);
+    onBookClick();
+  };
+
+  const handleToggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-        scrolled
-          ? "bg-black/80 backdrop-blur-xl border-b border-white/5"
-          : "bg-transparent"
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+        isScrolled ? 'bg-black/80 backdrop-blur-xl border-b border-white/5' : 'bg-transparent',
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,8 +73,9 @@ export function Header({ onBookClick }: HeaderProps) {
             ESTÚDIO<span className="font-bold text-purple-300">EFRATA</span>
           </a>
 
+          {/* Navegação Desktop */}
           <nav className="hidden lg:flex items-center gap-8">
-            {navItems.map((item) => (
+            {navigationItems.map(item => (
               <a
                 key={item.href}
                 href={item.href}
@@ -54,46 +86,45 @@ export function Header({ onBookClick }: HeaderProps) {
             ))}
             <button
               onClick={onBookClick}
-              className="ml-4 px-6 py-2.5 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-medium rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 tracking-wider"
+              className="ml-4 px-6 py-2.5 bg-linear-to-r from-purple-600 to-blue-600 text-white text-sm font-medium rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 tracking-wider"
             >
               Agendar Agora
             </button>
           </nav>
 
+          {/* Botão Menu Mobile */}
           <button
-            onClick={() => setMobileOpen(!mobileOpen)}
+            onClick={handleToggleMobileMenu}
             className="lg:hidden text-white p-2"
+            aria-label="Abrir Menu"
           >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
+      {/* Menu Mobile com AnimatePresence */}
       <AnimatePresence>
-        {mobileOpen && (
+        {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
+            animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             className="lg:hidden bg-black/95 backdrop-blur-xl border-t border-white/5 overflow-hidden"
           >
             <div className="px-4 py-6 space-y-4">
-              {navItems.map((item) => (
-                <a
+              {navigationItems.map(item => (
+                <button
                   key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="block text-white/70 hover:text-white transition-colors tracking-wider py-2"
+                  onClick={() => handleMobileNavClick(item.href)}
+                  className="block w-full text-left text-white/70 hover:text-white transition-colors tracking-wider py-2 bg-transparent border-none cursor-pointer"
                 >
                   {item.label}
-                </a>
+                </button>
               ))}
               <button
-                onClick={() => {
-                  setMobileOpen(false)
-                  onBookClick()
-                }}
-                className="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-medium rounded-full tracking-wider"
+                onClick={handleBookNowClick}
+                className="w-full px-6 py-3 bg-linear-to-r from-purple-600 to-blue-600 text-white text-sm font-medium rounded-full tracking-wider"
               >
                 Agendar Agora
               </button>
@@ -102,5 +133,5 @@ export function Header({ onBookClick }: HeaderProps) {
         )}
       </AnimatePresence>
     </header>
-  )
+  );
 }

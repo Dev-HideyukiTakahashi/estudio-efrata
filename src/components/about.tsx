@@ -1,6 +1,6 @@
-"use client"
+'use client';
 
-import { motion } from "framer-motion"
+import { motion } from 'framer-motion';
 
 export function About() {
   return (
@@ -21,20 +21,19 @@ export function About() {
               Sobre Nós
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-white mb-6">
-              Onde o talento se encontra com a{" "}
+              Onde o talento se encontra com a{' '}
               <span className="bg-gradient-to-r from-purple-300 to-blue-300 bg-clip-text text-transparent font-semibold">
                 excelência
               </span>
             </h2>
             <p className="text-white/50 text-sm leading-relaxed mb-6">
-              O Estúdio Efrata nasceu da paixão de um casal pela beleza e pelo estilo.
-              Valéria e Bruno uniram seus talentos para criar um espaço único onde
-              cada cliente vive uma experiência premium.
+              O Estúdio Efrata nasceu da paixão de um casal pela beleza e pelo estilo. Valéria e
+              Bruno uniram seus talentos para criar um espaço único onde cada cliente vive uma
+              experiência premium.
             </p>
             <p className="text-white/40 text-sm leading-relaxed mb-8">
-              Aqui, cada corte, cada coloração e cada barba são feitos com
-              dedicação, produtos profissionais e a certeza de que você sairá
-              daqui se sentindo incrível.
+              Aqui, cada corte, cada coloração e cada barba são feitos com dedicação, produtos
+              profissionais e a certeza de que você sairá daqui se sentindo incrível.
             </p>
 
             <div className="flex gap-8">
@@ -91,5 +90,5 @@ export function About() {
         </div>
       </div>
     </section>
-  )
+  );
 }

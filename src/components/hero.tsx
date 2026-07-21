@@ -9,14 +9,21 @@ export function Hero() {
       id="inicio"
       className="relative min-h-screen flex items-center overflow-hidden pt-24 sm:pt-28 pb-16"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0f] via-[#0f0a1a] to-[#0a0a1a]" />
+      {/* ========================================== */}
+      {/* 1. CAMADAS DE FUNDO E GRADIENTES           */}
+      {/* ========================================== */}
+      <div className="absolute inset-0 bg-linear-to-br from-[#0a0a0f] via-[#0f0a1a] to-[#0a0a1a]" />
 
-      <div className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-purple-900/10 to-transparent" />
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-blue-900/10 to-transparent" />
+      <div className="absolute top-0 left-0 w-1/2 h-full bg-linear-to-r from-purple-900/10 to-transparent" />
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-linear-to-lfrom-blue-900/10 to-transparent" />
 
+      {/* Efeitos de Luz / Blur de Fundo */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[128px]" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[128px]" />
 
+      {/* ========================================== */}
+      {/* 2. CONTEÚDO PRINCIPAL (TÍTULO E SUBTÍTULO)   */}
+      {/* ========================================== */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -24,7 +31,7 @@ export function Hero() {
           transition={{ duration: 0.8 }}
           className="text-center mb-10 sm:mb-12"
         >
-          {/* Badge Unificado para todas as telas */}
+          {/* Badge de Destaque no Topo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -37,20 +44,25 @@ export function Hero() {
             </span>
           </motion.div>
 
+          {/* Título Principal */}
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-light text-white mb-4 tracking-tight">
             Estúdio{' '}
-            <span className="bg-gradient-to-r from-purple-300 via-white to-blue-300 bg-clip-text text-transparent font-bold">
+            <span className="bg-linear-to-r from-purple-300 via-white to-blue-300 bg-clip-text text-transparent font-bold">
               Efrata
             </span>
           </h1>
 
-          {/* Texto descritivo enxuto e centralizado para evitar quebras em notebooks de 15" */}
+          {/* Subtítulo Descritivo */}
           <p className="text-base sm:text-lg text-white/50 max-w-xl mx-auto font-light tracking-wide">
             Beleza, estilo e cuidado em uma experiência premium.
           </p>
         </motion.div>
 
+        {/* ========================================== */}
+        {/* 3. CARDS DOS PROFISSIONAIS (VALÉRIA & BRUNO) */}
+        {/* ========================================== */}
         <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start max-w-5xl mx-auto">
+          {/* Card da Valéria */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -58,10 +70,10 @@ export function Hero() {
             className="group"
           >
             <div className="relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-purple-400/20 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative bg-gradient-to-br from-purple-900/30 to-purple-950/30 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/10">
+              <div className="absolute -inset-1 bg-linear-to-r from-purple-600/20 to-purple-400/20 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative bg-linear-to-br from-purple-900/30 to-purple-950/30 backdrop-blur-sm rounded-2xl p-8 border border-purple-500/10">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-700 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-linear-to-br from-purple-400 to-purple-700 flex items-center justify-center">
                     <Sparkles size={20} className="text-white" />
                   </div>
                   <div>
@@ -87,6 +99,7 @@ export function Hero() {
             </div>
           </motion.div>
 
+          {/* Card do Bruno */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -94,10 +107,10 @@ export function Hero() {
             className="group"
           >
             <div className="relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/20 to-blue-400/20 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative bg-gradient-to-br from-blue-900/30 to-blue-950/30 backdrop-blur-sm rounded-2xl p-8 border border-blue-500/10">
+              <div className="absolute -inset-1 bg-linear-to-r from-blue-600/20 to-blue-400/20 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative bg-linear-to-br from-blue-900/30 to-blue-950/30 backdrop-blur-sm rounded-2xl p-8 border border-blue-500/10">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-700 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-linear-to-br from-blue-400 to-blue-700 flex items-center justify-center">
                     <Scissors size={20} className="text-white" />
                   </div>
                   <div>
