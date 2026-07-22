@@ -10,14 +10,15 @@ const whatsappMessage = encodeURIComponent(
   'Olá! Vim através do site e gostaria de agendar um horário.',
 );
 const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+const currentYear = new Date().getFullYear();
 
 export function Footer() {
   return (
     // ==========================================
     // 2. SEÇÃO PRINCIPAL DO FOOTER
     // ==========================================
-    <footer className="relative py-16 border-t border-white/5">
-      {/* Fundo principal  */}
+    <footer className="relative py-16 border-t border-white/5 overflow-hidden">
+      {/* Fundo principal */}
       <div className="absolute inset-0 bg-linear-to-b from-black via-[#0a0a0f] to-black" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -79,33 +80,37 @@ export function Footer() {
         </div>
 
         {/* ========================================== */}
-        {/* 3. BARRA INFERIOR (NotNull Systems & PALETA) */}
+        {/* 3. BARRA INFERIOR (NotNull Systems & Copyright) */}
         {/* ========================================== */}
-        <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-[#a1a1aa]">
-            &copy; {new Date().getFullYear()} Estúdio Efrata. Todos os direitos reservados.
-          </p>
-
-          {/* Assinatura NotNull Systems */}
+        <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-8 sm:gap-4 text-center sm:text-left">
+          {/* Assinatura NotNull Systems com Logo */}
           <a
             href="https://notnullsystems.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-3 text-xs pb-1 cursor-pointer hover:brightness-125"
+            className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 group cursor-pointer"
           >
-            <span className="bg-linear-to-r from-amber-400 via-yellow-600 to-amber-800 bg-clip-text text-transparent font-medium ">
-              NotNull Systems
-            </span>
+            {/* Textos da Assinatura no mesmo padrão do site principal */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 items-center">
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold tracking-widest text-white/50 uppercase transition-colors duration-300 group-hover:text-white/70">
+                  NotNull
+                </span>
+                <span className="text-[12px] font-light tracking-[0.2em] text-white/30 uppercase transition-colors duration-300 group-hover:text-white/50">
+                  Systems
+                </span>
+              </div>
 
-            <span className="text-zinc-600">•</span>
-
-            <span className="bg-linear-to-r from-amber-400 via-yellow-600   to-amber-800 bg-clip-text text-transparent font-medium">
-              Always Present.
-            </span>
-
-            {/* Linha de sublinhado no hover */}
-            <span className="absolute bottom-0 left-0 h-px w-0 bg-linear-to-r from-amber-400 to-amber-700 transition-all duration-500 ease-out group-hover:w-full" />
+              <span className="text-[12px] font-light tracking-[0.15em] text-[#c9a94e]/70 italic sm:border-l sm:border-white/10 sm:pl-4 transition-colors duration-300 group-hover:text-[#c9a94e]">
+                Always present.
+              </span>
+            </div>
           </a>
+
+          {/* Copyright do Cliente */}
+          <p className="text-xs font-medium text-[#414144]">
+            &copy; {currentYear} Estúdio Efratá. Todos os direitos reservados.
+          </p>
         </div>
       </div>
     </footer>
