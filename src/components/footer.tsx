@@ -79,28 +79,28 @@ export function Footer() {
         </div>
 
         {/* ========================================== */}
-        {/* 3. BARRA INFERIOR (KASHI SYSTEMS & PALETA) */}
+        {/* 3. BARRA INFERIOR (NotNull Systems & PALETA) */}
         {/* ========================================== */}
         <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-[#a1a1aa]">
             &copy; {new Date().getFullYear()} Estúdio Efrata. Todos os direitos reservados.
           </p>
 
-          {/* Assinatura Kashi */}
+          {/* Assinatura NotNull Systems */}
           <a
-            href="https://kashi.com"
+            href="https://notnullsystems.com"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative inline-flex items-center gap-3 text-xs pb-1 cursor-pointer hover:brightness-125"
           >
             <span className="bg-linear-to-r from-amber-400 via-yellow-600 to-amber-800 bg-clip-text text-transparent font-medium ">
-              Kashi Systems
+              NotNull Systems
             </span>
 
             <span className="text-zinc-600">•</span>
 
             <span className="bg-linear-to-r from-amber-400 via-yellow-600   to-amber-800 bg-clip-text text-transparent font-medium">
-              Roots define power.
+              Nothing essential is optional.
             </span>
 
             {/* Linha de sublinhado no hover */}

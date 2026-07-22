@@ -27,8 +27,8 @@ export const metadata: Metadata = {
     'estúdio de beleza Cipó Guaçu',
     'agendamento online salão',
   ],
-  authors: [{ name: 'Kashi Systems' }],
-  creator: 'Kashi Systems',
+  authors: [{ name: 'NotNull Systems' }],
+  creator: 'NotNull Systems',
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
