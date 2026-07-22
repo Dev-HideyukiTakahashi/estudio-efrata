@@ -100,7 +100,7 @@ export function Footer() {
             <span className="text-zinc-600">•</span>
 
             <span className="bg-linear-to-r from-amber-400 via-yellow-600   to-amber-800 bg-clip-text text-transparent font-medium">
-              Nothing essential is optional.
+              Always Present.
             </span>
 
             {/* Linha de sublinhado no hover */}
